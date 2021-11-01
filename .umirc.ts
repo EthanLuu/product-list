@@ -10,8 +10,8 @@ export default defineConfig({
       path: '/',
       component: '@/layouts/index',
       routes: [
-        { exact: true, path: '/', component: '@/pages/home' },
-        { exact: true, path: '/list', component: '@/pages/list' },
+        { exact: true, path: '/', component: '@/pages/Home/home' },
+        { exact: true, path: '/list', component: '@/pages/List/list' },
       ],
     },
   ],
