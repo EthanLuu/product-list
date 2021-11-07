@@ -1,10 +1,18 @@
-.container {
+.wrapper {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.carouselContainer {
   height: 100%;
   width: 100%;
 }
 
 .item {
-  height: 350px;
+  min-height: 350px;
   width: 100%;
   position: relative;
 }
@@ -14,4 +22,15 @@
   width: 100%;
   position: absolute;
   object-fit: cover;
+}
+
+.title {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 4px 8px;
+  font-size: 2rem;
+  border-radius: var(--radius);
 }

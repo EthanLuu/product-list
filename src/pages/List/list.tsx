@@ -1,3 +1,10 @@
+import { ProductList } from '@/components/ProductList/ProductList';
+import styles from './list.less';
+
 export default () => {
-  return <h2>List</h2>;
+  return (
+    <div className={styles.listWrapper}>
+      <ProductList />
+    </div>
+  );
 };

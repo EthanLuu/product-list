@@ -1,3 +1,4 @@
+import { useRouterKey } from '@/utils/router';
 import { Input, Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from './Header.less';
@@ -7,15 +8,19 @@ const Title = () => {
 };
 
 export const Header = () => {
+  const selectedKey = useRouterKey();
+
   return (
     <Layout.Header className={styles.header}>
       <Link to="/">
         <Title />
       </Link>
-      {/* <div className={styles.logo}>
-        <Logo height="32" width="32" />
-      </div> */}
-      <Menu mode={'horizontal'} className={styles.menu}>
+      <Menu
+        mode={'horizontal'}
+        className={styles.menu}
+        selectedKeys={[selectedKey]}
+        color={'light'}
+      >
         <Menu.Item key="home">
           <Link to="/">首页</Link>
         </Menu.Item>
