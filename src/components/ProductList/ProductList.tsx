@@ -2,6 +2,7 @@ import { fetchAllProducts, Product } from '@/models/products';
 import useRequest from '@ahooksjs/use-request';
 import { Pagination } from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'umi';
 import { ProductCard } from '../ProductCard/ProductCard';
 import styles from './ProductList.less';
 
@@ -28,7 +29,9 @@ export const ProductList: React.FC = () => {
   return (
     <div className={styles.container}>
       {currentProducts.map((product: Product) => (
-        <ProductCard key={product.id} product={product} />
+        <Link to={`/products/detail/${product.id}`} key={product.id}>
+          <ProductCard product={product} />
+        </Link>
       ))}
       <Pagination
         className={styles.pagination}
@@ -37,6 +40,7 @@ export const ProductList: React.FC = () => {
         pageSize={pageSize}
         showSizeChanger={false}
         onChange={handlePageChange}
+        showQuickJumper
       />
     </div>
   );

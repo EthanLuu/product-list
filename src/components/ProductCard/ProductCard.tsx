@@ -11,7 +11,7 @@ const Cover = ({ imageUrl }: { imageUrl: string }) => {
 export const ProductCard: React.FC<{ product: Product }> = (props) => {
   const { product } = props;
 
-  const { title, imageUrl, brand } = product;
+  const { title, imageUrl, brand, price } = product;
 
   return (
     <Card
@@ -19,7 +19,7 @@ export const ProductCard: React.FC<{ product: Product }> = (props) => {
       hoverable
       cover={imageUrl ? <Cover imageUrl={imageUrl} /> : null}
     >
-      <Meta title={title} description={brand} />
+      <Meta title={title} description={price} />
     </Card>
   );
 };

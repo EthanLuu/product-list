@@ -8,7 +8,12 @@ const mockProduct = {
 
 const mockProducts = [];
 for (let i = 0; i < 100; i++) {
-  mockProducts.push({ ...mockProduct, id: i, title: mockProduct.title + i });
+  mockProducts.push({
+    ...mockProduct,
+    id: i,
+    title: mockProduct.title + i,
+    price: i + '.00元',
+  });
 }
 
 export default {

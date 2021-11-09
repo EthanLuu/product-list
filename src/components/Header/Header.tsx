@@ -19,13 +19,12 @@ export const Header = () => {
         mode={'horizontal'}
         className={styles.menu}
         selectedKeys={[selectedKey]}
-        color={'light'}
       >
         <Menu.Item key="home">
           <Link to="/">首页</Link>
         </Menu.Item>
-        <Menu.Item key="list">
-          <Link to="/list">商品列表</Link>
+        <Menu.Item key="products">
+          <Link to="/products">商品列表</Link>
         </Menu.Item>
       </Menu>
       <Input.Search

@@ -14,7 +14,12 @@ export default defineConfig({
       component: '@/layouts/index',
       routes: [
         { exact: true, path: '/', component: '@/pages/Home/home' },
-        { exact: true, path: '/list', component: '@/pages/List/list' },
+        { exact: true, path: '/products', component: '@/pages/Product/list' },
+        {
+          exact: true,
+          path: '/products/detail/:id',
+          component: '@/pages/Product/detail',
+        },
       ],
     },
   ],

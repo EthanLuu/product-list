@@ -3,18 +3,25 @@ export interface Product {
   title: string;
   imageUrl?: string;
   brand?: string;
+  price?: string;
+  category?: string;
+}
+export interface Category {
+  id: number;
+  name: string;
+  subCategories?: Category[];
 }
 
 export const fetchCarouselProducts = async () => {
   const response = await fetch('/api/carousel');
   const data = await response.json();
-  return data;
+  return data.items;
 };
 
 export const fetchCategories = async () => {
   const response = await fetch('/api/categories');
   const data = await response.json();
-  return data;
+  return data.items;
 };
 
 export const fetchAllProducts = async () => {
