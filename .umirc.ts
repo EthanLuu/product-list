@@ -20,6 +20,11 @@ export default defineConfig({
           path: '/products/detail/:id',
           component: '@/pages/Product/detail',
         },
+        {
+          exact: true,
+          path: '/products/search',
+          component: '@/pages/Product/detail',
+        },
       ],
     },
   ],
