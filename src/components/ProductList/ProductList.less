@@ -1,13 +1,28 @@
-.container {
-  display: flex;
+.list {
+  display: grid;
   height: 100%;
   width: 100%;
   grid-gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .pagination {
   width: 100%;
   text-align: center;
+}
+@media screen and (min-width: 680px) {
+  .list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }

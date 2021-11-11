@@ -28,11 +28,13 @@ export const ProductList: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {currentProducts.map((product: Product) => (
-        <Link to={`/products/detail/${product.id}`} key={product.id}>
-          <ProductCard product={product} />
-        </Link>
-      ))}
+      <div className={styles.list}>
+        {currentProducts.map((product: Product) => (
+          <Link to={`/products/detail/${product.id}`} key={product.id}>
+            <ProductCard product={product} />
+          </Link>
+        ))}
+      </div>
       <Pagination
         className={styles.pagination}
         defaultCurrent={1}
