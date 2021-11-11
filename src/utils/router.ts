@@ -9,3 +9,9 @@ export const useRouterKey = () => {
   const location = useLocation();
   return routerMap[location.pathname];
 };
+
+export const useSearchParams = () => {
+  const location = useLocation();
+  const queryString = location.search;
+  return new URLSearchParams(queryString);
+};

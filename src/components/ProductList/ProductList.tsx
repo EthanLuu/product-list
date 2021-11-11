@@ -6,15 +6,16 @@ import { Link } from 'umi';
 import { ProductCard } from '../ProductCard/ProductCard';
 import styles from './ProductList.less';
 
-export const ProductList: React.FC = () => {
-  const { data: products, loading } = useRequest(fetchAllProducts);
+export const ProductList: React.FC<{ products: Product[] }> = ({
+  products,
+}) => {
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   useEffect(() => {
     if (!products) return;
     setCurrentProducts(products.slice(0, pageSize));
   }, [products]);
 
-  if (loading || !products) {
+  if (!products) {
     return null;
   }
 
@@ -30,7 +31,11 @@ export const ProductList: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.list}>
         {currentProducts.map((product: Product) => (
-          <Link to={`/products/detail/${product.id}`} key={product.id}>
+          <Link
+            to={`/products/detail/${product.id}`}
+            key={product.id}
+            className={styles.item}
+          >
             <ProductCard product={product} />
           </Link>
         ))}
@@ -43,6 +48,7 @@ export const ProductList: React.FC = () => {
         showSizeChanger={false}
         onChange={handlePageChange}
         showQuickJumper
+        hideOnSinglePage
       />
     </div>
   );

@@ -23,7 +23,7 @@ export default defineConfig({
         {
           exact: true,
           path: '/products/search',
-          component: '@/pages/Product/detail',
+          component: '@/pages/Product/search',
         },
       ],
     },
