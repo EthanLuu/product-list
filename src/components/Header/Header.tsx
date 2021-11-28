@@ -1,5 +1,6 @@
 import { useRouterKey } from '@/utils/router';
 import { Input, Layout, Menu } from 'antd';
+import { useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './Header.less';
 
@@ -10,6 +11,7 @@ const Title = () => {
 export const Header = () => {
   const selectedKey = useRouterKey();
   const history = useHistory();
+  const search = useRef<Input>(null);
 
   return (
     <Layout.Header className={styles.header}>
@@ -29,11 +31,18 @@ export const Header = () => {
         </Menu.Item>
       </Menu>
       <Input.Search
+        ref={search}
         className={styles.search}
-        placeholder="请输入关键词"
-        onSearch={(key) => history.push(`/products/search?key=${key}`)}
+        placeholder={'请输入关键词'}
+        onSearch={(key, event) => {
+          history.push(`/products/search?key=${key}`);
+          if (search.current) {
+            search.current.setValue('');
+          }
+        }}
         name="q"
         type="text"
+        allowClear
       ></Input.Search>
     </Layout.Header>
   );

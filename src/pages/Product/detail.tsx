@@ -28,10 +28,15 @@ export default () => {
           ></Image>
         </div>
         <div className={styles.rightColumn}>
-          <Descriptions title={product?.title} bordered column={1}>
+          <Descriptions title={product?.title} column={1}>
             <Descriptions.Item label="名称">{product?.title}</Descriptions.Item>
+            <Descriptions.Item label="类别">
+              {product?.category}
+            </Descriptions.Item>
             <Descriptions.Item label="品牌">{product?.brand}</Descriptions.Item>
-            <Descriptions.Item label="价格">{product?.price}</Descriptions.Item>
+            <Descriptions.Item label="价格">
+              {product?.price.toFixed(2)}元
+            </Descriptions.Item>
           </Descriptions>
         </div>
       </div>

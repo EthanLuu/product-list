@@ -15,7 +15,7 @@ export default ({
   const { Content } = Layout;
   return (
     <ConfigProvider locale={zhCN}>
-      <Layout style={{ minHeight: '100vh' }} className="wrapper">
+      <Layout style={{ minHeight: '100vh' }}>
         <Header />
         <Content style={{ marginTop: '64px' }}>{children}</Content>
         <Footer />

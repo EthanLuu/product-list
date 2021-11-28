@@ -5,7 +5,7 @@ import styles from './ProductCard.less';
 const { Meta } = Card;
 
 const Cover = ({ imageUrl }: { imageUrl: string }) => {
-  return <img src={imageUrl}></img>;
+  return <img className={styles.cover} src={imageUrl}></img>;
 };
 
 export const ProductCard: React.FC<{ product: Product }> = (props) => {
@@ -19,7 +19,7 @@ export const ProductCard: React.FC<{ product: Product }> = (props) => {
       hoverable
       cover={imageUrl ? <Cover imageUrl={imageUrl} /> : null}
     >
-      <Meta title={title} description={price} />
+      <Meta title={title} description={`${price.toFixed(2)}元`} />
     </Card>
   );
 };

@@ -1,4 +1,35 @@
-.wrapper {
+:root {
   --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --light-shadow: 0 5px 6px -5px rgba(66, 66, 66, 10%);
   --radius: 8px;
+  --column-template: 1fr;
+  --page-padding: 16px 32px;
+}
+
+@media screen and (min-width: 680px) {
+  :root {
+    --column-template: 1fr 1fr;
+    --page-padding: 16px 64px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  :root {
+    --column-template: 1fr 1fr 1fr;
+    --page-padding: 16px 96px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --column-template: 1fr 1fr 1fr 1fr;
+    --page-padding: 16px 128px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  :root {
+    --column-template: 1fr 1fr 1fr 1fr 1fr 1fr;
+    --page-padding: 16px 128px;
+  }
 }

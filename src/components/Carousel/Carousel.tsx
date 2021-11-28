@@ -4,6 +4,7 @@ import {
   fetchCategories,
   Product,
 } from '@/models/products';
+import { getMulSearchHref, getSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import { Carousel as AntdCarousel, Menu } from 'antd';
 import { Link } from 'umi';
@@ -15,11 +16,18 @@ const SideMenu = () => {
     <Menu className={styles.categoryContainer}>
       {loading
         ? null
-        : data.map((item: Category) => (
+        : data?.map((item: Category) => (
             <Menu.SubMenu key={item.id} title={item.name}>
               {item.subCategories?.map((subItem) => (
                 <Menu.Item key={subItem.id}>
-                  <Link to={`/products?s=${subItem.name}`}>{subItem.name}</Link>
+                  <Link
+                    to={`/products${getMulSearchHref([
+                      { key: 'category', value: item.name },
+                      { key: 'brand', value: subItem.name },
+                    ])}`}
+                  >
+                    {subItem.name}
+                  </Link>
                 </Menu.Item>
               ))}
             </Menu.SubMenu>
@@ -37,7 +45,7 @@ export const Carousel = () => {
         <>
           <SideMenu />
           <AntdCarousel className={styles.carouselContainer} autoplay>
-            {data.map((item: Product) => (
+            {data?.map((item: Product) => (
               <div className={styles.item} key={item.id}>
                 <Link to={`/products/detail/${item.id}`}>
                   <img

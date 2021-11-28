@@ -1,5 +1,4 @@
-import { fetchAllProducts, Product } from '@/models/products';
-import useRequest from '@ahooksjs/use-request';
+import { Product } from '@/models/products';
 import { Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'umi';
@@ -19,7 +18,7 @@ export const ProductList: React.FC<{ products: Product[] }> = ({
     return null;
   }
 
-  const pageSize = 8;
+  const pageSize = 12;
 
   const handlePageChange = (page: number) => {
     const startIndex = (page - 1) * pageSize;
@@ -35,6 +34,7 @@ export const ProductList: React.FC<{ products: Product[] }> = ({
             to={`/products/detail/${product.id}`}
             key={product.id}
             className={styles.item}
+            target={'_blank'}
           >
             <ProductCard product={product} />
           </Link>

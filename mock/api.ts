@@ -1,6 +1,6 @@
 const mockProduct = {
   id: 1,
-  title: 'NZ3三相电压表/电流表',
+  title: '',
   imageUrl:
     'https://images.pexels.com/photos/3822859/pexels-photo-3822859.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
   brand: '南自',
@@ -8,11 +8,17 @@ const mockProduct = {
 
 const mockProducts = [];
 for (let i = 0; i < 100; i++) {
+  const price = Math.floor(Math.random() * 10000);
+  const category = ['电线电缆', '照明开关', '电力仪表', '电表'][
+    Math.floor(Math.random() * 4)
+  ];
   mockProducts.push({
     ...mockProduct,
-    id: i,
-    title: mockProduct.title + i,
-    price: i + '.00元',
+    id: i + 100,
+    title: mockProduct.title + category + (i + 100),
+    price: Math.random() * 100,
+    brand: ['Nike', 'Adidas'][Math.floor(Math.random() * 2)],
+    category,
   });
 }
 
@@ -64,11 +70,11 @@ export default {
         subCategories: [
           {
             id: 11,
-            name: '11',
+            name: 'Nike',
           },
           {
             id: 12,
-            name: '12',
+            name: 'Adidas',
           },
           {
             id: 13,
@@ -129,6 +135,18 @@ export default {
             name: '13',
           },
         ],
+      },
+    ],
+  },
+  '/api/brands': {
+    items: [
+      {
+        id: 1,
+        name: 'Nike',
+      },
+      {
+        id: 2,
+        name: 'Adidas',
       },
     ],
   },

@@ -1,27 +1,20 @@
 import Loading from '@/components/Loading/Loading';
 import { ProductList } from '@/components/ProductList/ProductList';
-import { fetchAllProducts } from '@/models/products';
+import { fetchAllProducts, filterProducts } from '@/models/products';
 import { useSearchParams } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import styles from './list.less';
 
 export default () => {
   const params = useSearchParams();
-  const key = params.get('key') || '';
+  const key = params.get('key');
   const { data, loading } = useRequest(fetchAllProducts);
 
   if (loading) {
     return <Loading />;
   }
 
-  const products =
-    data?.filter((product) => {
-      return (
-        product.brand?.includes(key) ||
-        product.category?.includes(key) ||
-        product.title?.includes(key)
-      );
-    }) || [];
+  const products = filterProducts(data || [], key);
 
   return (
     <div className={styles.listWrapper}>

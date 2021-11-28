@@ -15,3 +15,30 @@ export const useSearchParams = () => {
   const queryString = location.search;
   return new URLSearchParams(queryString);
 };
+
+interface Param {
+  key: string;
+  value: string | null;
+}
+
+export const getSearchHref = (key: string, value: string | null) => {
+  const params = new URLSearchParams(window.location.search);
+  if (!value) {
+    params.delete(key);
+  } else {
+    params.set(key, value);
+  }
+  return `?${params.toString()}`;
+};
+
+export const getMulSearchHref = (newParams: Param[]) => {
+  const params = new URLSearchParams(window.location.search);
+  newParams.map(({ key, value }) => {
+    if (!value) {
+      params.delete(key);
+    } else {
+      params.set(key, value);
+    }
+  });
+  return `?${params.toString()}`;
+};
