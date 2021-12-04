@@ -29,6 +29,9 @@ export const Header = () => {
         <Menu.Item key="products">
           <Link to="/products">商品列表</Link>
         </Menu.Item>
+        <Menu.Item key="management">
+          <Link to="/management">商品管理</Link>
+        </Menu.Item>
       </Menu>
       <Input.Search
         ref={search}

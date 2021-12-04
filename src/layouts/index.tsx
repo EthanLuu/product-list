@@ -3,7 +3,7 @@ import { Header } from '@/components/Header/Header';
 import { ConfigProvider, Layout } from 'antd';
 import { IRouteComponentProps } from 'umi';
 import zhCN from 'antd/lib/locale/zh_CN';
-import './index.less';
+import styles from './index.less';
 
 export default ({
   children,
@@ -17,7 +17,7 @@ export default ({
     <ConfigProvider locale={zhCN}>
       <Layout style={{ minHeight: '100vh' }}>
         <Header />
-        <Content style={{ marginTop: '64px' }}>{children}</Content>
+        <Content className={styles.content}>{children}</Content>
         <Footer />
       </Layout>
     </ConfigProvider>

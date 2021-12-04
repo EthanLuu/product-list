@@ -25,10 +25,14 @@ export default defineConfig({
           path: '/products/search',
           component: '@/pages/Product/search',
         },
+        {
+          exact: true,
+          path: '/management',
+          component: '@/pages/Management/index',
+        },
       ],
     },
   ],
   fastRefresh: {},
-  mfsu: {},
   title: '东鑫电器商行',
 });

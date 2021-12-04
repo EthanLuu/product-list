@@ -17,6 +17,8 @@ export interface Brand {
   name: string;
 }
 
+const local = 'http://localhost:8000';
+
 export const fetchCarouselProducts = async () => {
   const response = await fetch('/api/carousel');
   const data = await response.json();
@@ -36,9 +38,13 @@ export const fetchBrands = async () => {
 };
 
 export const fetchAllProducts = async () => {
-  const response = await fetch('/api/products');
+  const response = await fetch(`${local}/products/`);
   const data = await response.json();
-  return data?.items as Product[];
+  const products: Product[] = [];
+  if (data.items) {
+    data.items.map((p: any) => products.push(p.fields));
+  }
+  return products;
 };
 
 export const filterProducts = (

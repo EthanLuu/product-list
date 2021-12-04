@@ -5,6 +5,7 @@ export const useRouterKey = () => {
     '/': 'home',
     '/products': 'products',
     '/products/detail': 'productdetail',
+    '/management': 'management',
   };
   const location = useLocation();
   return routerMap[location.pathname];
