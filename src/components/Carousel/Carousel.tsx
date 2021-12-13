@@ -1,32 +1,31 @@
 import {
-  Category,
   fetchCarouselProducts,
-  fetchCategories,
+  fetchCategoryMap,
   Product,
 } from '@/models/products';
-import { getMulSearchHref, getSearchHref } from '@/utils/router';
+import { getMulSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import { Carousel as AntdCarousel, Menu } from 'antd';
 import { Link } from 'umi';
 import styles from './Carousel.less';
 
 const SideMenu = () => {
-  const { data, loading } = useRequest(fetchCategories);
+  const { data, loading } = useRequest(fetchCategoryMap);
   return (
     <Menu className={styles.categoryContainer}>
       {loading
         ? null
-        : data?.map((item: Category) => (
-            <Menu.SubMenu key={item.id} title={item.name}>
-              {item.subCategories?.map((subItem) => (
-                <Menu.Item key={subItem.id}>
+        : data?.map((item: any, index: number) => (
+            <Menu.SubMenu key={index} title={item[0]}>
+              {item[1]?.map((brand: string, index: number) => (
+                <Menu.Item key={index}>
                   <Link
                     to={`/products${getMulSearchHref([
-                      { key: 'category', value: item.name },
-                      { key: 'brand', value: subItem.name },
+                      { key: 'category', value: item[0] },
+                      { key: 'brand', value: brand },
                     ])}`}
                   >
-                    {subItem.name}
+                    {brand}
                   </Link>
                 </Menu.Item>
               ))}

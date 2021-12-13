@@ -1,6 +1,7 @@
 import { fetchBrands, fetchCategories } from '@/models/products';
 import { getSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import styles from './Filter.less';
@@ -36,16 +37,16 @@ export const Filter: React.FC<{
         >
           全部
         </Link>
-        {categories?.map((c) => (
+        {categories?.map((c, idx) => (
           <Link
-            to={getSearchHref('category', c.name)}
+            to={getSearchHref('category', c)}
             className={`${styles.item} ${
-              category === c.name ? styles.selected : ''
+              category === c ? styles.selected : ''
             }`}
-            key={c.id}
-            onClick={() => setCategory(c.name)}
+            key={idx}
+            onClick={() => setCategory(c)}
           >
-            {c.name}
+            {c}
           </Link>
         ))}
       </div>
@@ -58,16 +59,14 @@ export const Filter: React.FC<{
         >
           全部
         </Link>
-        {brands?.map((c) => (
+        {brands?.map((c, idx) => (
           <Link
-            to={getSearchHref('brand', c.name)}
-            className={`${styles.item} ${
-              brand === c.name ? styles.selected : ''
-            }`}
-            key={c.id}
-            onClick={() => setBrand(c.name)}
+            to={getSearchHref('brand', c)}
+            className={`${styles.item} ${brand === c ? styles.selected : ''}`}
+            key={idx}
+            onClick={() => setBrand(c)}
           >
-            {c.name}
+            {c}
           </Link>
         ))}
       </div>

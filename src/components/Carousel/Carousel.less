@@ -1,9 +1,15 @@
 .wrapper {
   display: grid;
-  grid-template-columns: 200px calc(100% - 200px);
+  grid-template-columns: 150px calc(100% - 150px);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
   overflow: hidden;
+}
+
+@media screen and (max-width: 680px) {
+  .wrapper {
+    grid-template-columns: 0px 100%;
+  }
 }
 
 .carouselContainer {

@@ -6,15 +6,19 @@ export interface Product {
   price: number;
   category?: string;
 }
-export interface Category {
-  id: number;
-  name: string;
-  subCategories?: Category[];
+export interface CategoryMapItem {
+  category: string;
+  brands: string[];
 }
 
 export interface Brand {
   id: number;
   name: string;
+}
+
+export enum ResponseMessage {
+  success = 'success',
+  error = 'error',
 }
 
 const local = 'http://localhost:8000';
@@ -26,15 +30,21 @@ export const fetchCarouselProducts = async () => {
 };
 
 export const fetchCategories = async () => {
-  const response = await fetch('/api/categories');
+  const response = await fetch(`${local}/products/categories`);
   const data = await response.json();
-  return data.items as Category[];
+  return data.items as string[];
 };
 
 export const fetchBrands = async () => {
-  const response = await fetch('/api/brands');
+  const response = await fetch(`${local}/products/brands`);
   const data = await response.json();
-  return data.items as Brand[];
+  return data.items as string[];
+};
+
+export const fetchCategoryMap = async () => {
+  const response = await fetch(`${local}/products/categorymap`);
+  const data = await response.json();
+  return data.items;
 };
 
 export const fetchAllProducts = async () => {
@@ -42,9 +52,34 @@ export const fetchAllProducts = async () => {
   const data = await response.json();
   const products: Product[] = [];
   if (data.items) {
-    data.items.map((p: any) => products.push(p.fields));
+    data.items.map((p: any) => products.push({ ...p.fields, id: p.pk }));
   }
   return products;
+};
+
+export const fetchOneProduct = async (id: number) => {
+  const response = await fetch(`${local}/products/${id}`);
+  const data = await response.json();
+  if (data.item) {
+    return JSON.parse(data.item) as Product;
+  }
+  return data.msg as string;
+};
+
+export const addProduct = async (body: any) => {
+  const response = await fetch(`${local}/products/`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+  return response;
+};
+
+export const delProduct = async (id: number) => {
+  const response = await fetch(`${local}/products/`, {
+    method: 'DELETE',
+    body: JSON.stringify({ id }),
+  });
+  return response;
 };
 
 export const filterProducts = (

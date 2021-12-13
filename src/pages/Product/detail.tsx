@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading/Loading';
-import { fetchAllProducts } from '@/models/products';
+import { fetchOneProduct, Product } from '@/models/products';
 import useRequest from '@ahooksjs/use-request';
 import { useParams } from 'react-router';
 import styles from '@/pages/Product/detail.less';
@@ -8,11 +8,17 @@ import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 
 export default () => {
   const { id } = useParams<{ id: string }>();
-  const { data, loading } = useRequest(fetchAllProducts);
-  if (loading) {
+  const { data: product, loading } = useRequest(() =>
+    fetchOneProduct(parseInt(id)),
+  );
+
+  if (loading || !product) {
     return <Loading />;
   }
-  const product = data?.find((product) => product.id === Number.parseInt(id));
+
+  if (typeof product === 'string') {
+    return <div>404</div>;
+  }
 
   return (
     <div className={styles.wrapper}>

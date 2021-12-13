@@ -6,6 +6,13 @@
   --page-padding: 16px 32px;
 }
 
+@media screen and (min-width: 480px) {
+  :root {
+    --column-template: 1fr 1fr;
+    --page-padding: 16px 32px;
+  }
+}
+
 @media screen and (min-width: 680px) {
   :root {
     --column-template: 1fr 1fr;
@@ -16,7 +23,7 @@
 @media screen and (min-width: 1000px) {
   :root {
     --column-template: 1fr 1fr 1fr;
-    --page-padding: 16px 96px;
+    --page-padding: 16px 128px;
   }
 }
 
@@ -37,4 +44,5 @@
 .content {
   margin-top: 64px;
   padding: var(--page-padding);
+  display: flex;
 }
