@@ -74,6 +74,14 @@ export const addProduct = async (body: any) => {
   return response;
 };
 
+export const editProduct = async (body: any, id: number) => {
+  const response = await fetch(`${local}/products/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(body),
+  });
+  return response;
+};
+
 export const delProduct = async (id: number) => {
   const response = await fetch(`${local}/products/`, {
     method: 'DELETE',

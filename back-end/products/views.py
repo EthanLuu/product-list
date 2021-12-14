@@ -8,8 +8,6 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 import json
 
-import products
-
 from .models import Product
 
 
@@ -76,10 +74,12 @@ def edit_one(request, id):
     response = {}
     try:
         obj = json.loads(request.body)
-        p = Product.objects.get(pk=id)
-        for key in obj.keys():
-            if key in p:
-                p[key] = obj.get(key)
+        p: Product = Product.objects.get(pk=id)
+        p.title = obj.get("title")
+        p.brand = obj.get("brand")
+        p.category = obj.get("category")
+        p.imageUrl = obj.get("imageUrl")
+        p.price = obj.get("price")
         p.save()
         response['msg'] = 'success'
     except Exception as e:

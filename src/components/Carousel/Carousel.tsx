@@ -9,16 +9,16 @@ import { Carousel as AntdCarousel, Menu } from 'antd';
 import { Link } from 'umi';
 import styles from './Carousel.less';
 
-const SideMenu = () => {
+export const SideMenu: React.FC<{ categoryMap: any }> = ({ categoryMap }) => {
   const { data, loading } = useRequest(fetchCategoryMap);
   return (
     <Menu className={styles.categoryContainer}>
       {loading
         ? null
-        : data?.map((item: any, index: number) => (
-            <Menu.SubMenu key={index} title={item[0]}>
-              {item[1]?.map((brand: string, index: number) => (
-                <Menu.Item key={index}>
+        : data?.map((item: any, cIdx: number) => (
+            <Menu.SubMenu key={cIdx} title={item[0]}>
+              {item[1]?.map((brand: string, bIdx: number) => (
+                <Menu.Item key={`${cIdx}-${bIdx}`}>
                   <Link
                     to={`/products${getMulSearchHref([
                       { key: 'category', value: item[0] },
@@ -35,30 +35,23 @@ const SideMenu = () => {
   );
 };
 
-export const Carousel = () => {
-  const { data, loading } = useRequest(fetchCarouselProducts);
-
+export const Carousel: React.FC<{ carouselProducts: Product[] }> = ({
+  carouselProducts,
+}) => {
   return (
-    <div className={styles.wrapper}>
-      {loading ? null : (
-        <>
-          <SideMenu />
-          <AntdCarousel className={styles.carouselContainer} autoplay>
-            {data?.map((item: Product) => (
-              <div className={styles.item} key={item.id}>
-                <Link to={`/products/detail/${item.id}`}>
-                  <img
-                    className={styles.cover}
-                    src={item.imageUrl}
-                    alt={item.title}
-                  />
-                </Link>
-                <div className={styles.title}>{item.title}</div>
-              </div>
-            ))}
-          </AntdCarousel>
-        </>
-      )}
-    </div>
+    <AntdCarousel className={styles.carouselContainer} autoplay>
+      {carouselProducts?.map((item) => (
+        <div className={styles.item} key={item.id}>
+          <Link to={`/products/detail/${item.id}`}>
+            <img
+              className={styles.cover}
+              src={item.imageUrl}
+              alt={item.title}
+            />
+          </Link>
+          <div className={styles.title}>{item.title}</div>
+        </div>
+      ))}
+    </AntdCarousel>
   );
 };

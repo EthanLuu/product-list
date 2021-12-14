@@ -1,12 +1,22 @@
 import { Tabs } from 'antd';
-import { ProductForm, ProductTable } from './product';
+import { ProductTable } from '@/components/ProductTable';
 import styles from './index.less';
-import { fetchAllProducts, Product } from '@/models/products';
+import {
+  fetchAllProducts,
+  fetchBrands,
+  fetchCategories,
+  Product,
+} from '@/models/products';
 import { useEffect, useState } from 'react';
 import useRequest from '@ahooksjs/use-request';
+import { ProductForm } from '@/components/ProductForm/ProductForm';
+import { SetttingsForm } from '@/components/SettingsForm';
 
 export default () => {
-  const { data, loading } = useRequest(() => fetchAllProducts());
+  const { data, loading } = useRequest(fetchAllProducts);
+  const { data: categories = [], loading: loadingCategories } =
+    useRequest(fetchCategories);
+  const { data: brands = [], loading: loadingBrands } = useRequest(fetchBrands);
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     if (!data) return;
@@ -25,7 +35,9 @@ export default () => {
           <ProductTable
             products={products}
             setProducts={setProducts}
-            loading={loading}
+            loading={loading || loadingCategories || loadingBrands}
+            categories={categories}
+            brands={brands}
           />
         </Tabs.TabPane>
         <Tabs.TabPane
@@ -35,8 +47,8 @@ export default () => {
         >
           <ProductForm products={products} setProducts={setProducts} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="网站数据" key="webInfo">
-          网站数据
+        <Tabs.TabPane tab="网站设置" key="siteSettings">
+          <SetttingsForm />
         </Tabs.TabPane>
       </Tabs>
     </div>

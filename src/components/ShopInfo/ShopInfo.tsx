@@ -1,14 +1,15 @@
 import styles from './ShopInfo.less';
 import { Descriptions } from 'antd';
 
-export const ShopInfo = () => {
+export const ShopInfo: React.FC<{ phone: string; address: string }> = ({
+  phone,
+  address,
+}) => {
   return (
     <div className={styles.container}>
-      <Descriptions title="店铺信息" column={1} className={styles.info}>
-        <Descriptions.Item label="联系电话">1810000000</Descriptions.Item>
-        <Descriptions.Item label="地址">
-          张家港市杨舍镇梁丰五金机电城嘉瑞商业广场2M-130
-        </Descriptions.Item>
+      <Descriptions title="店铺信息" column={2} className={styles.info}>
+        <Descriptions.Item label="联系电话">{phone}</Descriptions.Item>
+        <Descriptions.Item label="地址">{address}</Descriptions.Item>
       </Descriptions>
       <div className={styles.locationInfo}>
         <a

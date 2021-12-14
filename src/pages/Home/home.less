@@ -5,3 +5,17 @@
   height: 100%;
   width: 100%;
 }
+
+.carouselWrapper {
+  display: grid;
+  grid-template-columns: 150px calc(100% - 150px);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+@media screen and (max-width: 680px) {
+  .carouselWrapper {
+    grid-template-columns: 0px 100%;
+  }
+}
