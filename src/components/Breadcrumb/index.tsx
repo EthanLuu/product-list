@@ -1,5 +1,5 @@
 import { Breadcrumb as AntdBreadcrumb } from 'antd';
-import { HomeOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, HomeOutlined } from '@ant-design/icons';
 
 export const Breadcrumb: React.FC<{
   style?: React.CSSProperties;

@@ -1,12 +1,9 @@
-import {
-  ProductForm,
-  ProductsContext,
-} from '@/components/ProductForm/ProductForm';
-import { delProduct, Product, ResponseMessage } from '@/models/products';
-import { Space, Table, Popconfirm, message, Modal } from 'antd';
+import { message, Modal, Popconfirm, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { useEffect, useState } from 'react';
+import { ProductForm, ProductsContext } from '@/components/ProductForm';
+import { delProduct, Product, ResponseMessage } from '@/models/products';
 
 export const ProductTable = (
   props: ProductsContext & { categories: string[]; brands: string[] },

@@ -1,5 +1,4 @@
-import Loading from '@/components/Loading/Loading';
-import { ProductList } from '@/components/ProductList/ProductList';
+import { Loading, ProductList } from '@/components';
 import { fetchAllProducts, filterProducts } from '@/models/products';
 import { useSearchParams } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';

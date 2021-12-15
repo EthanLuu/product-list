@@ -1,6 +1,6 @@
-import { Product } from '@/models/products';
 import { Card } from 'antd';
-import styles from './ProductCard.less';
+import { Product } from '@/models/products';
+import styles from './index.less';
 
 const { Meta } = Card;
 

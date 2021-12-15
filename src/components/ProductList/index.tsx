@@ -1,9 +1,9 @@
-import { Product } from '@/models/products';
 import { Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'umi';
-import { ProductCard } from '../ProductCard/ProductCard';
-import styles from './ProductList.less';
+import { Product } from '@/models/products';
+import { ProductCard } from '../ProductCard';
+import styles from './index.less';
 
 export const ProductList: React.FC<{ products: Product[] }> = ({
   products,

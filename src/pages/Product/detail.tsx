@@ -1,10 +1,9 @@
-import Loading from '@/components/Loading/Loading';
-import { fetchOneProduct, Product } from '@/models/products';
-import useRequest from '@ahooksjs/use-request';
-import { useParams } from 'react-router';
-import styles from '@/pages/Product/detail.less';
 import { Descriptions, Image } from 'antd';
-import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
+import { useParams } from 'react-router';
+import { Breadcrumb, Loading } from '@/components';
+import { fetchOneProduct } from '@/models/products';
+import useRequest from '@ahooksjs/use-request';
+import styles from './detail.less';
 
 export default () => {
   const { id } = useParams<{ id: string }>();

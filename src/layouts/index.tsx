@@ -1,8 +1,8 @@
-import { Footer } from '@/components/Footer/Footer';
-import { Header } from '@/components/Header/Header';
 import { ConfigProvider, Layout } from 'antd';
-import { IRouteComponentProps } from 'umi';
 import zhCN from 'antd/lib/locale/zh_CN';
+import { IRouteComponentProps } from 'umi';
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
 import styles from './index.less';
 
 export default ({

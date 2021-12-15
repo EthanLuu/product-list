@@ -1,16 +1,14 @@
 import { Tabs } from 'antd';
-import { ProductTable } from '@/components/ProductTable';
-import styles from './index.less';
+import { useEffect, useState } from 'react';
+import { ProductForm, ProductTable, SetttingsForm } from '@/components';
 import {
   fetchAllProducts,
   fetchBrands,
   fetchCategories,
   Product,
 } from '@/models/products';
-import { useEffect, useState } from 'react';
 import useRequest from '@ahooksjs/use-request';
-import { ProductForm } from '@/components/ProductForm/ProductForm';
-import { SetttingsForm } from '@/components/SettingsForm';
+import styles from './index.less';
 
 export default () => {
   const { data, loading } = useRequest(fetchAllProducts);

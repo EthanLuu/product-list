@@ -1,7 +1,7 @@
+import { Form, Input } from 'antd';
 import { fetchSiteSetting } from '@/models/settings';
 import useRequest from '@ahooksjs/use-request';
-import { Form, Input } from 'antd';
-import Loading from '../Loading/Loading';
+import { Loading } from '../Loading';
 
 export const SetttingsForm = () => {
   const { data: notice, loading: loadingNotice } = useRequest(() =>

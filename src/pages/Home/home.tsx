@@ -1,7 +1,4 @@
-import { Carousel, SideMenu } from '@/components/Carousel/Carousel';
-import Loading from '@/components/Loading/Loading';
-import { Notice } from '@/components/Notice/Notice';
-import { ShopInfo } from '@/components/ShopInfo/ShopInfo';
+import { Carousel, Loading, Notice, ShopInfo, SideMenu } from '@/components';
 import { fetchCarouselProducts, fetchCategoryMap } from '@/models/products';
 import { fetchSiteSetting } from '@/models/settings';
 import useRequest from '@ahooksjs/use-request';

@@ -1,4 +1,4 @@
-import styles from './Notice.less';
+import styles from './index.less';
 
 export const Notice: React.FC<{ notice: string }> = ({ notice }) => {
   try {

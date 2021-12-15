@@ -4,9 +4,6 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  dynamicImport: {
-    loading: '@/components/Loading/Loading',
-  },
   routes: [
     {
       exact: false,

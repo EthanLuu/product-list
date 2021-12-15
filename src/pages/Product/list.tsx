@@ -1,10 +1,8 @@
-import { Filter, SortSolution } from '@/components/Filter/Filter';
-import Loading from '@/components/Loading/Loading';
-import { ProductList } from '@/components/ProductList/ProductList';
+import { useEffect, useState } from 'react';
+import { Filter, Loading, ProductList, SortSolution } from '@/components';
 import { fetchAllProducts, filterProducts, Product } from '@/models/products';
 import { useSearchParams } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
-import { useEffect, useState } from 'react';
 import styles from './list.less';
 
 export default () => {

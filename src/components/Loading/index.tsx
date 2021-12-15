@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
-import styles from './Loading.less';
+import styles from './index.less';
 
-export default () => (
+export const Loading = () => (
   <div className={styles.container}>
     <Spin />
   </div>

@@ -1,13 +1,9 @@
-import {
-  fetchCarouselProducts,
-  fetchCategoryMap,
-  Product,
-} from '@/models/products';
-import { getMulSearchHref } from '@/utils/router';
-import useRequest from '@ahooksjs/use-request';
 import { Carousel as AntdCarousel, Menu } from 'antd';
 import { Link } from 'umi';
-import styles from './Carousel.less';
+import { fetchCategoryMap, Product } from '@/models/products';
+import { getMulSearchHref } from '@/utils/router';
+import useRequest from '@ahooksjs/use-request';
+import styles from './index.less';
 
 export const SideMenu: React.FC<{ categoryMap: any }> = ({ categoryMap }) => {
   const { data, loading } = useRequest(fetchCategoryMap);

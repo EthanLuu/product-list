@@ -1,5 +1,5 @@
-import styles from './ShopInfo.less';
 import { Descriptions } from 'antd';
+import styles from './index.less';
 
 export const ShopInfo: React.FC<{ phone: string; address: string }> = ({
   phone,

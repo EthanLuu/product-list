@@ -1,10 +1,9 @@
+import { Link } from 'react-router-dom';
 import { fetchBrands, fetchCategories } from '@/models/products';
 import { getSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Loading from '../Loading/Loading';
-import styles from './Filter.less';
+import { Loading } from '../Loading';
+import styles from './index.less';
 
 export enum SortSolution {
   default = 'default',
