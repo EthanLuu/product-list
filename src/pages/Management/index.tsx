@@ -29,7 +29,7 @@ export default () => {
         className={styles.tabs}
         size={'large'}
       >
-        <Tabs.TabPane tab="商品数据" key="products">
+        <Tabs.TabPane tab="所有商品" key="products">
           <ProductTable
             products={products}
             setProducts={setProducts}
@@ -45,7 +45,11 @@ export default () => {
         >
           <ProductForm products={products} setProducts={setProducts} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="网站设置" key="siteSettings">
+        <Tabs.TabPane
+          tab="网站设置"
+          key="siteSettings"
+          className={styles.siteSettings}
+        >
           <SetttingsForm />
         </Tabs.TabPane>
       </Tabs>

@@ -1,9 +1,14 @@
-import { message, Modal, Popconfirm, Space, Table } from 'antd';
+import { Button, message, Modal, Popconfirm, Space, Switch, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { useEffect, useState } from 'react';
 import { ProductForm, ProductsContext } from '@/components/ProductForm';
-import { delProduct, Product, ResponseMessage } from '@/models/products';
+import {
+  delProduct,
+  editProduct,
+  Product,
+  ResponseMessage,
+} from '@/models/products';
 
 export const ProductTable = (
   props: ProductsContext & { categories: string[]; brands: string[] },
@@ -15,25 +20,49 @@ export const ProductTable = (
     categories,
     brands,
   } = props;
-  const [editProduct, setEditProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [categoryFilters, setCategoryFilters] = useState<ColumnFilterItem[]>(
     [],
   );
   const [brandFilters, setBrandFilters] = useState<ColumnFilterItem[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
 
-  const handleDelete = async (product: Product) => {
-    const response = await delProduct(product.id);
+  const handleDelete = async (id: number) => {
+    const response = await delProduct(id);
     const msg = (await response.json())['msg'];
     if (msg === ResponseMessage.success) {
       message.success('删除成功');
-      setProducts([...products.filter((item) => item.id !== product.id)]);
+      setProducts([...products.filter((item) => item.id !== id)]);
+      return true;
     } else {
       message.error(msg);
+      return false;
     }
   };
 
+  const handleDeleteAll = async () => {
+    const promises: Promise<boolean>[] = [];
+    selectedRowKeys.map((key) => {
+      promises.push(handleDelete(key));
+    });
+    Promise.all(promises);
+  };
+
   const handleEdit = (product: Product) => {
-    setEditProduct(product);
+    setProduct(product);
+  };
+
+  const handleSwitch = async (checked: boolean, product: Product) => {
+    const response = await editProduct(
+      { ...product, inCarousel: checked },
+      product.id,
+    );
+    const data = await response.json();
+    if (data.msg === ResponseMessage.success) {
+      message.success('修改成功');
+    } else {
+      message.success('修改失败');
+    }
   };
 
   useEffect(() => {
@@ -72,10 +101,21 @@ export const ProductTable = (
     {
       title: '价格',
       dataIndex: 'price',
+      sorter: (rowA, rowB) => rowA.price - rowB.price,
     },
     {
       title: '图片地址',
       dataIndex: 'imageUrl',
+    },
+    {
+      title: '首页展示',
+      key: 'inCarousel',
+      render: (_, record) => (
+        <Switch
+          defaultChecked={record.inCarousel}
+          onChange={(checked) => handleSwitch(checked, record)}
+        ></Switch>
+      ),
     },
     {
       title: '操作',
@@ -85,7 +125,7 @@ export const ProductTable = (
           <a onClick={() => handleEdit(record)}>编辑</a>
           <Popconfirm
             title="确认删除该项商品？"
-            onConfirm={() => handleDelete(record)}
+            onConfirm={() => handleDelete(record.id)}
           >
             <a href="#">删除</a>
           </Popconfirm>
@@ -93,28 +133,41 @@ export const ProductTable = (
       ),
     },
   ];
+
   return (
     <>
+      <div style={{ marginBottom: 16 }}>
+        <Popconfirm
+          title="确认删除所有选中商品？"
+          onConfirm={() => handleDeleteAll()}
+        >
+          <Button type="default" loading={loading}>
+            删除选中项
+          </Button>
+        </Popconfirm>
+      </div>
       <Table
         dataSource={products}
         columns={columns}
         rowKey={(item) => item.id}
         rowSelection={{
           type: 'checkbox',
+          selectedRowKeys,
+          onChange: (keys: any[]) => setSelectedRowKeys(keys),
         }}
         loading={loading}
         pagination={{ position: ['bottomRight'], pageSize: 10 }}
       ></Table>
       <Modal
-        title={editProduct?.title}
-        visible={!!editProduct}
-        onCancel={() => setEditProduct(null)}
+        title={product?.title}
+        visible={!!product}
+        onCancel={() => setProduct(null)}
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
       >
         <ProductForm
-          product={editProduct}
-          setProduct={setEditProduct}
+          product={product}
+          setProduct={setProduct}
           products={products}
           setProducts={setProducts}
         />

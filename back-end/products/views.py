@@ -80,6 +80,7 @@ def edit_one(request, id):
         p.category = obj.get("category")
         p.imageUrl = obj.get("imageUrl")
         p.price = obj.get("price")
+        p.inCarousel = obj.get("inCarousel")
         p.save()
         response['msg'] = 'success'
     except Exception as e:

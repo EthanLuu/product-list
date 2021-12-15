@@ -5,6 +5,7 @@ export interface Product {
   brand?: string;
   price: number;
   category?: string;
+  inCarousel?: boolean;
 }
 export interface CategoryMapItem {
   category: string;
@@ -24,9 +25,8 @@ export enum ResponseMessage {
 const local = 'http://localhost:8000';
 
 export const fetchCarouselProducts = async () => {
-  const response = await fetch('/api/carousel');
-  const data = await response.json();
-  return data.items as Product[];
+  const products = await fetchAllProducts();
+  return products.filter((x) => x.inCarousel);
 };
 
 export const fetchCategories = async () => {
