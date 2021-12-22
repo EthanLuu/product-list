@@ -22,7 +22,7 @@ export enum ResponseMessage {
   error = 'error',
 }
 
-const local = 'http://localhost:8000';
+const local = 'http://localhost:233';
 
 export const fetchCarouselProducts = async () => {
   const products = await fetchAllProducts();
