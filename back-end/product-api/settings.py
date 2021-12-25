@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d@m89a&io8xku99!@!me-+%@*mcs=0g@cb_v76@0+_*@ognjr7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shopapi.ethanloo.cn']
 
 
 # Application definition
@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
          'OPTIONS': {
-             'read_default_file': '/etc/my.cnf',
+             'read_default_file': '/etc/shop.cnf',
          },
     }
 }
