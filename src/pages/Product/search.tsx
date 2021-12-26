@@ -1,5 +1,5 @@
 import { Loading, ProductList } from '@/components';
-import { fetchAllProducts, filterProducts } from '@/models/products';
+import { fetchAllProducts, filterProductsByKey } from '@/models/products';
 import { useSearchParams } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import styles from './list.less';
@@ -13,7 +13,7 @@ export default () => {
     return <Loading />;
   }
 
-  const products = filterProducts(data || [], key);
+  const products = filterProductsByKey(data || [], key);
 
   return (
     <div className={styles.listWrapper}>

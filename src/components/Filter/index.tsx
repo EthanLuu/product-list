@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
-import { fetchBrands, fetchCategories } from '@/models/products';
 import { getSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
-import { Loading } from '../Loading';
 import styles from './index.less';
 
 export enum SortSolution {
@@ -13,18 +11,23 @@ export enum SortSolution {
 
 export const Filter: React.FC<{
   category: string | null;
+  categories: string[] | null;
   brand: string | null;
+  brands: string[] | null;
   sort: SortSolution;
   setCategory: React.Dispatch<React.SetStateAction<string | null>>;
   setBrand: React.Dispatch<React.SetStateAction<string | null>>;
   setSort: React.Dispatch<React.SetStateAction<SortSolution>>;
-}> = ({ category, brand, sort, setCategory, setBrand, setSort }) => {
-  const { data: categories, loading: loadingC } = useRequest(fetchCategories);
-  const { data: brands, loading: loadingB } = useRequest(fetchBrands);
-
-  if (loadingB || loadingC) {
-    return <Loading />;
-  }
+}> = ({
+  category,
+  brand,
+  categories,
+  brands,
+  sort,
+  setCategory,
+  setBrand,
+  setSort,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.row}>

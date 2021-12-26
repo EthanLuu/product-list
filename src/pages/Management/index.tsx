@@ -7,6 +7,7 @@ import {
   fetchCategories,
   Product,
 } from '@/models/products';
+import { fetchSiteSettings } from '@/models/settings';
 import useRequest from '@ahooksjs/use-request';
 import styles from './index.less';
 
@@ -20,6 +21,9 @@ export default () => {
     if (!data) return;
     setProducts([...(data as Product[])]);
   }, [loading]);
+
+  const { data: settings = [], loading: loadingSettings } =
+    useRequest(fetchSiteSettings);
 
   return (
     <div className={styles.wrapper}>
@@ -50,7 +54,7 @@ export default () => {
           key="siteSettings"
           className={styles.siteSettings}
         >
-          <SetttingsForm />
+          <SetttingsForm settings={settings} />
         </Tabs.TabPane>
       </Tabs>
     </div>

@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Filter, Loading, ProductList, SortSolution } from '@/components';
-import { fetchAllProducts, filterProducts, Product } from '@/models/products';
+import {
+  fetchAllProducts,
+  fetchBrands,
+  fetchCategories,
+  filterProductsByBrandAndCategory,
+  Product,
+} from '@/models/products';
 import { useSearchParams } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import styles from './list.less';
@@ -13,10 +19,14 @@ export default () => {
   );
   const [brand, setBrand] = useState<string | null>(params.get('brand'));
   const [products, setProducts] = useState<Product[]>([]);
+
+  const { data: brands = [], loading: loadingB } = useRequest(fetchBrands);
+  const { data: categories = [], loading: loadingC } =
+    useRequest(fetchCategories);
   const [sort, setSort] = useState<SortSolution>(SortSolution.default);
 
   useEffect(() => {
-    setProducts(filterProducts(data, '', category, brand));
+    setProducts(filterProductsByBrandAndCategory(data, brand, category));
   }, [loading, category, brand]);
 
   useEffect(() => {
@@ -31,7 +41,13 @@ export default () => {
     setProducts([...p]);
   }, [sort]);
 
-  if (loading || category === undefined || brand === undefined) {
+  if (
+    loading ||
+    category === undefined ||
+    brand === undefined ||
+    loadingB ||
+    loadingC
+  ) {
     return <Loading />;
   }
 
@@ -39,7 +55,9 @@ export default () => {
     <div className={styles.listWrapper}>
       <Filter
         category={category}
+        categories={categories}
         brand={brand}
+        brands={brands}
         setCategory={setCategory}
         setBrand={setBrand}
         sort={sort}

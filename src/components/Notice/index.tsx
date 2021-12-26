@@ -1,6 +1,11 @@
 import styles from './index.less';
 
-export const Notice: React.FC<{ notice: string }> = ({ notice }) => {
+export const Notice: React.FC<{ notice: string | undefined }> = ({
+  notice,
+}) => {
+  if (!notice) {
+    return null;
+  }
   try {
     const data = JSON.parse(notice);
     const { title, rows } = data;

@@ -2,6 +2,7 @@ from django.db import models
 
 
 class SiteSetting(models.Model):
+    key = models.CharField(max_length=20, default="")
     name = models.CharField(max_length=20, default="")
     value = models.CharField(max_length=1000, default=None, null=True)
 

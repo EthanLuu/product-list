@@ -22,7 +22,10 @@ export enum ResponseMessage {
   error = 'error',
 }
 
-const local = 'http://localhost:233';
+const api =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:233'
+    : 'https://shopapi.ethanloo.cn';
 
 export const fetchCarouselProducts = async () => {
   const products = await fetchAllProducts();
@@ -30,25 +33,25 @@ export const fetchCarouselProducts = async () => {
 };
 
 export const fetchCategories = async () => {
-  const response = await fetch(`${local}/products/categories`);
+  const response = await fetch(`${api}/products/categories`);
   const data = await response.json();
   return data.items as string[];
 };
 
 export const fetchBrands = async () => {
-  const response = await fetch(`${local}/products/brands`);
+  const response = await fetch(`${api}/products/brands`);
   const data = await response.json();
   return data.items as string[];
 };
 
 export const fetchCategoryMap = async () => {
-  const response = await fetch(`${local}/products/categorymap`);
+  const response = await fetch(`${api}/products/categorymap`);
   const data = await response.json();
   return data.items;
 };
 
 export const fetchAllProducts = async () => {
-  const response = await fetch(`${local}/products/`);
+  const response = await fetch(`${api}/products/`);
   const data = await response.json();
   const products: Product[] = [];
   if (data.items) {
@@ -58,7 +61,7 @@ export const fetchAllProducts = async () => {
 };
 
 export const fetchOneProduct = async (id: number) => {
-  const response = await fetch(`${local}/products/${id}`);
+  const response = await fetch(`${api}/products/${id}`);
   const data = await response.json();
   if (data.item) {
     return JSON.parse(data.item) as Product;
@@ -67,7 +70,7 @@ export const fetchOneProduct = async (id: number) => {
 };
 
 export const addProduct = async (body: any) => {
-  const response = await fetch(`${local}/products/`, {
+  const response = await fetch(`${api}/products/`, {
     method: 'POST',
     body: JSON.stringify(body),
   });
@@ -75,7 +78,7 @@ export const addProduct = async (body: any) => {
 };
 
 export const editProduct = async (body: any, id: number) => {
-  const response = await fetch(`${local}/products/${id}`, {
+  const response = await fetch(`${api}/products/${id}`, {
     method: 'PUT',
     body: JSON.stringify(body),
   });
@@ -83,20 +86,15 @@ export const editProduct = async (body: any, id: number) => {
 };
 
 export const delProduct = async (id: number) => {
-  const response = await fetch(`${local}/products/`, {
+  const response = await fetch(`${api}/products/`, {
     method: 'DELETE',
     body: JSON.stringify({ id }),
   });
   return response;
 };
 
-export const filterProducts = (
-  all: Product[],
-  key?: string | null,
-  category?: string | null,
-  brand?: string | null,
-) => {
-  if (!key && !category && !brand) {
+export const filterProductsByKey = (all: Product[], key?: string | null) => {
+  if (!key) {
     return all;
   }
   return (
@@ -105,10 +103,28 @@ export const filterProducts = (
       return (
         (key && b?.includes(key)) ||
         (key && c?.includes(key)) ||
-        (key && t?.includes(key)) ||
-        (brand && b?.includes(brand)) ||
-        (category && c?.includes(category))
+        (key && t?.includes(key))
       );
+    }) || []
+  );
+};
+
+export const filterProductsByBrandAndCategory = (
+  all: Product[],
+  brand?: string | null,
+  category?: string | null,
+) => {
+  if (!category && !brand) {
+    return all;
+  }
+  return (
+    all?.filter((product) => {
+      const { brand: b, category: c } = product;
+      if (brand && category) {
+        return b == brand && c == category;
+      } else {
+        return b == brand || c == category;
+      }
     }) || []
   );
 };

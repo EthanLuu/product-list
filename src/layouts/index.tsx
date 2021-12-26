@@ -5,6 +5,10 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import styles from './index.less';
 
+const ErrorBoundary = () => {
+  return <div>Error</div>;
+};
+
 export default ({
   children,
   location,

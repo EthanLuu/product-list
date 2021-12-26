@@ -1,15 +1,18 @@
 import { Descriptions } from 'antd';
+import { SiteSetting } from '@/models/settings';
 import styles from './index.less';
 
-export const ShopInfo: React.FC<{ phone: string; address: string }> = ({
-  phone,
-  address,
+export const ShopInfo: React.FC<{ settings: SiteSetting[] }> = ({
+  settings,
 }) => {
   return (
     <div className={styles.container}>
       <Descriptions title="店铺信息" column={2} className={styles.info}>
-        <Descriptions.Item label="联系电话">{phone}</Descriptions.Item>
-        <Descriptions.Item label="地址">{address}</Descriptions.Item>
+        {settings?.map((setting) => (
+          <Descriptions.Item label={setting.name} key={setting.key}>
+            {setting.value}
+          </Descriptions.Item>
+        ))}
       </Descriptions>
       <div className={styles.locationInfo}>
         <a

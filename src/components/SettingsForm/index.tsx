@@ -1,21 +1,13 @@
 import { Button, Form, Input, message } from 'antd';
 import { ResponseMessage } from '@/models/products';
-import { fetchSiteSetting, updateSiteSetting } from '@/models/settings';
-import useRequest from '@ahooksjs/use-request';
-import { Loading } from '../Loading';
+import { SiteSetting, updateSiteSettings } from '@/models/settings';
 
-export const SetttingsForm = () => {
-  const { data: notice, loading: loadingNotice } = useRequest(() =>
-    fetchSiteSetting('notice'),
-  );
-  const { data: phone, loading: loadingPhone } = useRequest(() =>
-    fetchSiteSetting('phone'),
-  );
-  const { data: address, loading: loadingAddress } = useRequest(() =>
-    fetchSiteSetting('address'),
-  );
+export const SetttingsForm: React.FC<{ settings: SiteSetting[] }> = ({
+  settings,
+}) => {
+  const notice = settings.find((setting) => setting.key === 'notice')?.value;
 
-  const parseNotice = (notice: string) => {
+  const parseNotice = (notice = '') => {
     const obj = JSON.parse(notice);
     let rows = '';
     for (let row of obj.rows) {
@@ -37,25 +29,15 @@ export const SetttingsForm = () => {
 
   const handleSubmit = async (body: any) => {
     const notice = stringfyNotice(body.noticeTitle, body.noticeContent);
-    const phone = body.phone;
-    const address = body.address;
-    const responseA = await updateSiteSetting('notice', notice);
-    const responseB = await updateSiteSetting('phone', phone);
-    const responseC = await updateSiteSetting('address', address);
-    if (
-      [responseA, responseB, responseC].every(
-        (r) => (r.msg = ResponseMessage.success),
-      )
-    ) {
+    body.notice = notice;
+    settings.map((x) => (x.value = body[x.key]));
+    const response = await updateSiteSettings(settings);
+    if (response.msg === ResponseMessage.success) {
       message.success('修改成功');
     } else {
-      message.error([responseA.msg, responseB.msg, responseC.msg]);
+      message.error(response.msg);
     }
   };
-
-  if (loadingNotice || loadingPhone || loadingAddress) {
-    return <Loading />;
-  }
 
   return (
     <Form
@@ -77,12 +59,18 @@ export const SetttingsForm = () => {
       >
         <Input.TextArea autoSize />
       </Form.Item>
-      <Form.Item label="手机" name="phone" initialValue={phone}>
-        <Input />
-      </Form.Item>
-      <Form.Item label="地址" name="address" initialValue={address}>
-        <Input />
-      </Form.Item>
+      {settings
+        .filter((x) => x.key !== 'notice')
+        .map((x) => (
+          <Form.Item
+            label={x.name}
+            name={x.key}
+            initialValue={x.value}
+            key={x.key}
+          >
+            <Input />
+          </Form.Item>
+        ))}
       <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="primary" htmlType="submit">
           {'确定'}

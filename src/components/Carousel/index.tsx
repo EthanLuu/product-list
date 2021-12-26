@@ -1,32 +1,29 @@
 import { Carousel as AntdCarousel, Menu } from 'antd';
 import { Link } from 'umi';
-import { fetchCategoryMap, Product } from '@/models/products';
+import { Product } from '@/models/products';
 import { getMulSearchHref } from '@/utils/router';
 import useRequest from '@ahooksjs/use-request';
 import styles from './index.less';
 
 export const SideMenu: React.FC<{ categoryMap: any }> = ({ categoryMap }) => {
-  const { data, loading } = useRequest(fetchCategoryMap);
   return (
     <Menu className={styles.categoryContainer}>
-      {loading
-        ? null
-        : data?.map((item: any, cIdx: number) => (
-            <Menu.SubMenu key={cIdx} title={item[0]}>
-              {item[1]?.map((brand: string, bIdx: number) => (
-                <Menu.Item key={`${cIdx}-${bIdx}`}>
-                  <Link
-                    to={`/products${getMulSearchHref([
-                      { key: 'category', value: item[0] },
-                      { key: 'brand', value: brand },
-                    ])}`}
-                  >
-                    {brand}
-                  </Link>
-                </Menu.Item>
-              ))}
-            </Menu.SubMenu>
+      {categoryMap?.map((item: any, cIdx: number) => (
+        <Menu.SubMenu key={cIdx} title={item[0]}>
+          {item[1]?.map((brand: string, bIdx: number) => (
+            <Menu.Item key={`${cIdx}-${bIdx}`}>
+              <Link
+                to={`/products${getMulSearchHref([
+                  { key: 'category', value: item[0] },
+                  { key: 'brand', value: brand },
+                ])}`}
+              >
+                {brand}
+              </Link>
+            </Menu.Item>
           ))}
+        </Menu.SubMenu>
+      ))}
     </Menu>
   );
 };

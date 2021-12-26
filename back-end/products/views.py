@@ -101,7 +101,7 @@ def get_all():
     return JsonResponse(response)
 
 
-def get_category_map(request):
+def get_category_map(_):
     response = {}
     try:
         items = Product.objects.values_list('category', 'brand')
@@ -119,7 +119,7 @@ def get_category_map(request):
     return JsonResponse(response)
 
 
-def get_categories(request):
+def get_categories(_):
     response = {}
     try:
         items = Product.objects.values_list('category', flat=True)
@@ -131,7 +131,7 @@ def get_categories(request):
     return JsonResponse(response)
 
 
-def get_brands(request):
+def get_brands(_):
     response = {}
     try:
         items = Product.objects.values_list('brand', flat=True)

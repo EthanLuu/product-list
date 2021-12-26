@@ -1,19 +1,12 @@
 import { Carousel, Loading, Notice, ShopInfo, SideMenu } from '@/components';
 import { fetchCarouselProducts, fetchCategoryMap } from '@/models/products';
-import { fetchSiteSetting } from '@/models/settings';
+import { fetchSiteSettings, SiteSetting } from '@/models/settings';
 import useRequest from '@ahooksjs/use-request';
 import styles from './home.less';
 
 export default () => {
-  const { data: notice, loading: loadingNotice } = useRequest(() =>
-    fetchSiteSetting('notice'),
-  );
-  const { data: phone, loading: loadingPhone } = useRequest(() =>
-    fetchSiteSetting('phone'),
-  );
-  const { data: address, loading: loadingAddress } = useRequest(() =>
-    fetchSiteSetting('address'),
-  );
+  const { data: settings = [], loading: loadingSettings } =
+    useRequest(fetchSiteSettings);
   const { data: categoryMap, loading: loadingMap } =
     useRequest(fetchCategoryMap);
 
@@ -21,24 +14,22 @@ export default () => {
     fetchCarouselProducts,
   );
 
-  if (
-    loadingNotice ||
-    loadingMap ||
-    loadingCarousel ||
-    loadingPhone ||
-    loadingAddress
-  ) {
+  if (loadingMap || loadingCarousel || loadingSettings) {
     return <Loading />;
   }
 
   return (
     <div className={styles.homeWrapper}>
-      <Notice notice={notice} />
+      <Notice
+        notice={settings.find((x: SiteSetting) => x.key === 'notice')?.value}
+      />
       <div className={styles.carouselWrapper}>
         <SideMenu categoryMap={categoryMap} />
         <Carousel carouselProducts={carouselProducts} />
       </div>
-      <ShopInfo phone={phone} address={address} />
+      <ShopInfo
+        settings={settings.filter((x: SiteSetting) => x.key !== 'notice')}
+      />
     </div>
   );
 };
